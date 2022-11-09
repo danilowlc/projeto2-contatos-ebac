@@ -1,54 +1,17 @@
-const form = document.getElementById("form-contato");
-const imgTel = '<img src="./images/contato.png" alt="Emoji celebrando"/>';
+$(document).ready(function() {
 
-const contatos = [];
-const telefones = [];
 
-let linhas = '';
+    $('form').on('submit', function(e) {
+        e.preventDefault();
+        const nomeTarefa = $('#nome-tarefa').val();
+        const novoItem = $('<div class="tarefa"></div>');
+        $(`<li>${nomeTarefa}</li>`).appendTo(novoItem);
+        $(novoItem).appendTo('ul');
 
-function adcionaLinha() {
-
-    const inputNomeContato = document.getElementById('nome-contato');
-    const inputTelContato = document.getElementById('tel-contato');
-
-    if (contatos.includes(inputNomeContato.value)){
-        alert(`O contato ${inputNomeContato.value} já foi inserido`);
-    } else {
-        contatos.push(inputNomeContato.value);
-        telefones.push(parseInt(inputTelContato.value));
-
-        let linha = '<tr>';
-        linha += `<td>${inputNomeContato.value}</td>`;
-        linha += `<td>${inputTelContato.value}</td>`;
-        linha += `<td><a href="tel:${inputTelContato.value}">${imgTel}</a></td>`;
-        linha += '</tr>';
-
-        linhas += linha;
-    }
-
-    inputNomeContato.value = '';
-    inputTelContato.value = '';
-
-}
-
-function atualizaTabela() {
+        $('.tarefa').click(function() {
+            $(this).css('text-decoration', 'line-through');
+        })    
+    })
     
-    const corpoTabela = document.querySelector('tbody');
-    corpoTabela.innerHTML = linhas;
 
-}
-
-function atualizaLinhaFinal(){
-    
-    document.getElementById('total-contatos').innerHTML = telefones.length;
-
-}
-
-form.addEventListener('submit', function(e){
-    e.preventDefault();
-    
-    adcionaLinha();
-    atualizaTabela();
-    atualizaLinhaFinal();
-
-});
+})
